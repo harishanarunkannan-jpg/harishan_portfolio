@@ -1,0 +1,87 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap");
+
+:root {
+  font-family:
+    "Inter",
+    sans-serif;
+
+  font-synthesis: none;
+
+  text-rendering:
+    optimizeLegibility;
+
+  -webkit-font-smoothing:
+    antialiased;
+
+  -moz-osx-font-smoothing:
+    grayscale;
+
+  color-scheme: dark;
+}
+
+html {
+  background:
+    #050b12;
+}
+
+body {
+  min-width: 320px;
+
+  min-height: 100vh;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  appearance: none;
+
+  -webkit-appearance: none;
+}
+
+::selection {
+  background:
+    rgba(89, 255, 154, 0.22);
+
+  color:
+    #ffffff;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background:
+    #050b12;
+}
+
+::-webkit-scrollbar-thumb {
+  background:
+    linear-gradient(
+      180deg,
+      #25465b,
+      #1b614b
+    );
+
+  border-radius:
+    999px;
+
+  border:
+    2px solid
+    #050b12;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background:
+    linear-gradient(
+      180deg,
+      #2df5ff,
+      #59ff9a
+    );
+}
