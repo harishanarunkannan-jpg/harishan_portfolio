@@ -18,10 +18,18 @@ import lightPresentation from "./assets/projects/presentation.JPG";
 import lightProcess from "./assets/projects/process.png";
 import lightSchematic from "./assets/projects/schematic.png";
 
+/* TASKFLOW IMAGES */
+import taskflowHome from "./assets/projects/home.png";
+import taskflowMulti from "./assets/projects/multi.png";
+import taskflowPriority from "./assets/projects/priority.png";
+import taskflowShare from "./assets/projects/share.png";
+import taskflowSign from "./assets/projects/sign.png";
+import taskflowDrag from "./assets/projects/drag.png";
+
 /* CAD FAN IMAGE */
 import fanImage from "./assets/projects/fan.png";
 
-/* REAL LINKS */
+/* LINKS */
 const githubProfile =
   "https://github.com/harishanarunkannan-jpg";
 
@@ -33,6 +41,9 @@ const emailAddress =
 
 const tigerRepo =
   "https://github.com/harishanarunkannan-jpg/tiger-detailing-booking-platform";
+
+const taskflowRepo =
+  "https://github.com/harishanarunkannan-jpg/taskflow";
 
 const typingPhrases = [
   "FULL-STACK DEVELOPER",
@@ -47,6 +58,39 @@ const navItems = [
   { id: "skills", label: "Skills" },
   { id: "projects", label: "Projects" },
   { id: "contact", label: "Contact" },
+];
+
+const taskflowGallery = [
+  {
+    id: "sign",
+    label: "AUTHENTICATION",
+    image: taskflowSign,
+  },
+  {
+    id: "home",
+    label: "PROJECT BOARD",
+    image: taskflowHome,
+  },
+  {
+    id: "priority",
+    label: "PRIORITIES",
+    image: taskflowPriority,
+  },
+  {
+    id: "multi",
+    label: "MY TASKS",
+    image: taskflowMulti,
+  },
+  {
+    id: "drag",
+    label: "DRAG & DROP",
+    image: taskflowDrag,
+  },
+  {
+    id: "share",
+    label: "TEAM INVITE",
+    image: taskflowShare,
+  },
 ];
 
 const tigerGallery = [
@@ -120,9 +164,42 @@ const lightGallery = [
   },
 ];
 
+const fanGallery = [
+  {
+    id: "fan",
+    label: "VENTILATION FAN",
+    image: fanImage,
+  },
+];
+
 const projects = [
   {
     id: "01",
+    category: "FULL-STACK SOFTWARE",
+    title: "TaskFlow",
+
+    description:
+      "A full-stack project management application built to organize projects, manage tasks, and support team collaboration through a Kanban-style workflow.",
+
+    secondary:
+      "Built with React, Node.js, Express, and MySQL, TaskFlow includes secure authentication, project workspaces, task assignment, drag-and-drop task management, comments, activity history, search, filtering, and sorting.",
+
+    stack: [
+      "React",
+      "JavaScript",
+      "Node.js",
+      "Express",
+      "MySQL",
+      "JWT",
+      "bcrypt",
+      "REST API",
+      "dnd-kit",
+      "Git",
+    ],
+  },
+
+  {
+    id: "02",
     category: "FULL-STACK",
     title: "Tiger Detailing Booking Platform",
 
@@ -143,7 +220,7 @@ const projects = [
   },
 
   {
-    id: "02",
+    id: "03",
     category: "EMBEDDED SYSTEMS",
     title: "Light Pollution Measuring Device",
 
@@ -172,7 +249,7 @@ const projects = [
   },
 
   {
-    id: "03",
+    id: "04",
     category: "CAD / DESIGN",
     title: "Engineering 1050 Ventilation Fan",
 
@@ -374,11 +451,24 @@ function App() {
   const [mobileMenuOpen, setMobileMenuOpen] =
     useState(false);
 
+  const [activeTaskflowImage, setActiveTaskflowImage] =
+    useState(0);
+
   const [activeTigerImage, setActiveTigerImage] =
     useState(0);
 
   const [activeLightImage, setActiveLightImage] =
     useState(0);
+
+  /* FULL-SCREEN GALLERY */
+  const [lightboxGallery, setLightboxGallery] =
+    useState([]);
+
+  const [lightboxIndex, setLightboxIndex] =
+    useState(0);
+
+  const [lightboxTitle, setLightboxTitle] =
+    useState("");
 
   useEffect(() => {
     const currentPhrase =
@@ -585,6 +675,129 @@ function App() {
     };
   }, []);
 
+  function openGallery(
+    gallery,
+    index,
+    title
+  ) {
+    setLightboxGallery(gallery);
+    setLightboxIndex(index);
+    setLightboxTitle(title);
+  }
+
+  function closeGallery() {
+    setLightboxGallery([]);
+    setLightboxIndex(0);
+    setLightboxTitle("");
+  }
+
+  function showPreviousImage() {
+    if (
+      lightboxGallery.length === 0
+    ) {
+      return;
+    }
+
+    setLightboxIndex(
+      (previous) =>
+        (
+          previous -
+          1 +
+          lightboxGallery.length
+        ) %
+        lightboxGallery.length
+    );
+  }
+
+  function showNextImage() {
+    if (
+      lightboxGallery.length === 0
+    ) {
+      return;
+    }
+
+    setLightboxIndex(
+      (previous) =>
+        (previous + 1) %
+        lightboxGallery.length
+    );
+  }
+
+  useEffect(() => {
+    function handleGalleryKeyboard(
+      event
+    ) {
+      if (
+        lightboxGallery.length === 0
+      ) {
+        return;
+      }
+
+      if (
+        event.key === "Escape"
+      ) {
+        closeGallery();
+      }
+
+      if (
+        event.key === "ArrowLeft"
+      ) {
+        event.preventDefault();
+
+        setLightboxIndex(
+          (previous) =>
+            (
+              previous -
+              1 +
+              lightboxGallery.length
+            ) %
+            lightboxGallery.length
+        );
+      }
+
+      if (
+        event.key === "ArrowRight"
+      ) {
+        event.preventDefault();
+
+        setLightboxIndex(
+          (previous) =>
+            (previous + 1) %
+            lightboxGallery.length
+        );
+      }
+    }
+
+    window.addEventListener(
+      "keydown",
+      handleGalleryKeyboard
+    );
+
+    return () => {
+      window.removeEventListener(
+        "keydown",
+        handleGalleryKeyboard
+      );
+    };
+  }, [lightboxGallery]);
+
+  useEffect(() => {
+    if (
+      lightboxGallery.length > 0
+    ) {
+      document.body.style.overflow =
+        "hidden";
+    } else {
+      document.body.style.overflow =
+        "";
+    }
+
+    return () => {
+      document.body.style.overflow =
+        "";
+    };
+  }, [lightboxGallery]);
+
   function handleMouseMove(event) {
     if (!appRef.current) return;
 
@@ -696,6 +909,11 @@ function App() {
       activeExperience
     ];
 
+  const selectedTaskflowImage =
+    taskflowGallery[
+      activeTaskflowImage
+    ];
+
   const selectedTigerImage =
     tigerGallery[
       activeTigerImage
@@ -704,6 +922,11 @@ function App() {
   const selectedLightImage =
     lightGallery[
       activeLightImage
+    ];
+
+  const currentLightboxImage =
+    lightboxGallery[
+      lightboxIndex
     ];
 
   return (
@@ -715,6 +938,237 @@ function App() {
       }
     >
       <div className="cursor-light"></div>
+
+      {/* FULL-SCREEN IMAGE VIEWER */}
+      {currentLightboxImage && (
+        <div
+          onClick={
+            closeGallery
+          }
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 99999,
+            background:
+              "rgba(0, 0, 0, 0.96)",
+            backdropFilter:
+              "blur(12px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding:
+              "28px 80px 60px",
+          }}
+        >
+          {/* CLOSE BUTTON */}
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              closeGallery();
+            }}
+            aria-label="Close image viewer"
+            style={{
+              position: "fixed",
+              top: "22px",
+              right: "25px",
+              width: "48px",
+              height: "48px",
+              borderRadius: "12px",
+              border:
+                "1px solid rgba(255,255,255,0.2)",
+              background:
+                "rgba(15,18,25,0.92)",
+              color: "#ffffff",
+              fontSize: "29px",
+              lineHeight: 1,
+              cursor: "pointer",
+              zIndex: 100002,
+            }}
+          >
+            ×
+          </button>
+
+          {/* PREVIOUS */}
+          {lightboxGallery.length >
+            1 && (
+            <button
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                showPreviousImage();
+              }}
+              aria-label="Previous image"
+              style={{
+                position:
+                  "fixed",
+                left: "22px",
+                top: "50%",
+                transform:
+                  "translateY(-50%)",
+                width: "58px",
+                height: "70px",
+                borderRadius:
+                  "14px",
+                border:
+                  "1px solid rgba(255,255,255,0.2)",
+                background:
+                  "rgba(15,18,25,0.88)",
+                color: "#ffffff",
+                fontSize: "42px",
+                cursor: "pointer",
+                zIndex: 100002,
+              }}
+            >
+              ‹
+            </button>
+          )}
+
+          {/* NEXT */}
+          {lightboxGallery.length >
+            1 && (
+            <button
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                showNextImage();
+              }}
+              aria-label="Next image"
+              style={{
+                position:
+                  "fixed",
+                right: "22px",
+                top: "50%",
+                transform:
+                  "translateY(-50%)",
+                width: "58px",
+                height: "70px",
+                borderRadius:
+                  "14px",
+                border:
+                  "1px solid rgba(255,255,255,0.2)",
+                background:
+                  "rgba(15,18,25,0.88)",
+                color: "#ffffff",
+                fontSize: "42px",
+                cursor: "pointer",
+                zIndex: 100002,
+              }}
+            >
+              ›
+            </button>
+          )}
+
+          <div
+            onClick={(event) =>
+              event.stopPropagation()
+            }
+            style={{
+              maxWidth: "94vw",
+              maxHeight: "94vh",
+              display: "flex",
+              flexDirection:
+                "column",
+              alignItems:
+                "center",
+              justifyContent:
+                "center",
+              gap: "14px",
+            }}
+          >
+            <img
+              src={
+                currentLightboxImage.image
+              }
+              alt={
+                currentLightboxImage.label
+              }
+              style={{
+                display: "block",
+                maxWidth: "91vw",
+                maxHeight: "82vh",
+                width: "auto",
+                height: "auto",
+                objectFit: "contain",
+                borderRadius:
+                  "12px",
+                border:
+                  "1px solid rgba(255,255,255,0.15)",
+                boxShadow:
+                  "0 30px 100px rgba(0,0,0,0.8)",
+              }}
+            />
+
+            <div
+              style={{
+                display: "flex",
+                alignItems:
+                  "center",
+                gap: "16px",
+                color:
+                  "rgba(255,255,255,0.75)",
+                fontSize: "12px",
+                letterSpacing:
+                  "0.12em",
+                textTransform:
+                  "uppercase",
+              }}
+            >
+              <span>
+                {lightboxTitle}
+              </span>
+
+              <span>
+                //
+              </span>
+
+              <span>
+                {
+                  currentLightboxImage.label
+                }
+              </span>
+
+              {lightboxGallery.length >
+                1 && (
+                <>
+                  <span>
+                    //
+                  </span>
+
+                  <span>
+                    {lightboxIndex +
+                      1}
+                    /
+                    {
+                      lightboxGallery.length
+                    }
+                  </span>
+                </>
+              )}
+            </div>
+
+            {lightboxGallery.length >
+              1 && (
+              <span
+                style={{
+                  color:
+                    "rgba(255,255,255,0.42)",
+                  fontSize:
+                    "11px",
+                  letterSpacing:
+                    "0.08em",
+                  textTransform:
+                    "uppercase",
+                }}
+              >
+                ← Previous
+                &nbsp;&nbsp; |
+                &nbsp;&nbsp; Next →
+              </span>
+            )}
+          </div>
+        </div>
+      )}
 
       <header className="navbar-shell">
         <div className="navbar">
@@ -1040,7 +1494,7 @@ function App() {
 
             <div className="stats-grid">
               {[
-                ["01", "3+", "Projects Built"],
+                ["01", "4+", "Projects Built"],
                 ["02", "Full-Stack", "+ Engineering"],
                 ["03", "Hands-On", "Builder"],
                 ["04", "Always", "Learning"],
@@ -1368,6 +1822,7 @@ function App() {
             </p>
           </div>
 
+          {/* TASKFLOW */}
           <div
             className="featured-project interactive-card reveal"
             onMouseMove={
@@ -1381,41 +1836,58 @@ function App() {
               <div className="featured-image-wrapper">
                 <img
                   key={
-                    selectedTigerImage.id
+                    selectedTaskflowImage.id
                   }
                   src={
-                    selectedTigerImage.image
+                    selectedTaskflowImage.image
                   }
-                  alt={`Tiger Detailing ${selectedTigerImage.label}`}
+                  alt={`TaskFlow ${selectedTaskflowImage.label}`}
                   className="featured-project-image"
+                  onClick={() =>
+                    openGallery(
+                      taskflowGallery,
+                      activeTaskflowImage,
+                      "TaskFlow"
+                    )
+                  }
+                  style={{
+                    cursor:
+                      "zoom-in",
+                  }}
                 />
 
                 <div className="image-status">
                   <span></span>
 
                   {
-                    selectedTigerImage.label
+                    selectedTaskflowImage.label
                   }
                 </div>
               </div>
 
-              <div className="project-gallery tiger-gallery">
-                {tigerGallery.map(
+              <div className="project-gallery taskflow-gallery">
+                {taskflowGallery.map(
                   (item, index) => (
                     <button
                       type="button"
                       key={item.id}
                       className={`gallery-thumbnail ${
-                        activeTigerImage ===
+                        activeTaskflowImage ===
                         index
                           ? "active"
                           : ""
                       }`}
-                      onClick={() =>
-                        setActiveTigerImage(
+                      onClick={() => {
+                        setActiveTaskflowImage(
                           index
-                        )
-                      }
+                        );
+
+                        openGallery(
+                          taskflowGallery,
+                          index,
+                          "TaskFlow"
+                        );
+                      }}
                     >
                       <img
                         src={
@@ -1424,6 +1896,10 @@ function App() {
                         alt={
                           item.label
                         }
+                        style={{
+                          cursor:
+                            "zoom-in",
+                        }}
                       />
 
                       <span>
@@ -1487,7 +1963,7 @@ function App() {
 
               <div className="project-actions">
                 <a
-                  href={tigerRepo}
+                  href={taskflowRepo}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="project-link primary-project-link"
@@ -1496,7 +1972,7 @@ function App() {
                 </a>
 
                 <a
-                  href={tigerRepo}
+                  href={taskflowRepo}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="project-link"
@@ -1507,8 +1983,9 @@ function App() {
             </div>
           </div>
 
+          {/* TIGER DETAILING */}
           <div
-            className="featured-project light-project interactive-card reveal"
+            className="featured-project interactive-card reveal"
             onMouseMove={
               handleCardMove
             }
@@ -1517,44 +1994,61 @@ function App() {
             }
           >
             <div className="featured-project-media">
-              <div className="featured-image-wrapper light-image-wrapper">
+              <div className="featured-image-wrapper">
                 <img
                   key={
-                    selectedLightImage.id
+                    selectedTigerImage.id
                   }
                   src={
-                    selectedLightImage.image
+                    selectedTigerImage.image
                   }
-                  alt={`Light Pollution Project ${selectedLightImage.label}`}
-                  className="featured-project-image light-project-image"
+                  alt={`Tiger Detailing ${selectedTigerImage.label}`}
+                  className="featured-project-image"
+                  onClick={() =>
+                    openGallery(
+                      tigerGallery,
+                      activeTigerImage,
+                      "Tiger Detailing"
+                    )
+                  }
+                  style={{
+                    cursor:
+                      "zoom-in",
+                  }}
                 />
 
                 <div className="image-status">
                   <span></span>
 
                   {
-                    selectedLightImage.label
+                    selectedTigerImage.label
                   }
                 </div>
               </div>
 
-              <div className="project-gallery light-gallery">
-                {lightGallery.map(
+              <div className="project-gallery tiger-gallery">
+                {tigerGallery.map(
                   (item, index) => (
                     <button
                       type="button"
                       key={item.id}
                       className={`gallery-thumbnail ${
-                        activeLightImage ===
+                        activeTigerImage ===
                         index
                           ? "active"
                           : ""
                       }`}
-                      onClick={() =>
-                        setActiveLightImage(
+                      onClick={() => {
+                        setActiveTigerImage(
                           index
-                        )
-                      }
+                        );
+
+                        openGallery(
+                          tigerGallery,
+                          index,
+                          "Tiger Detailing"
+                        );
+                      }}
                     >
                       <img
                         src={
@@ -1563,6 +2057,10 @@ function App() {
                         alt={
                           item.label
                         }
+                        style={{
+                          cursor:
+                            "zoom-in",
+                        }}
                       />
 
                       <span>
@@ -1612,34 +2110,6 @@ function App() {
                 }
               </p>
 
-              <div className="project-contribution">
-                <span>
-                  MY CONTRIBUTION //
-                </span>
-
-                <p>
-                  {
-                    projects[1]
-                      .contribution
-                  }
-                </p>
-              </div>
-
-              <div className="client-presentation-box">
-                <div className="client-presentation-top">
-                  <span className="client-dot"></span>
-
-                  CLIENT PRESENTATION
-                </div>
-
-                <p>
-                  {
-                    projects[1]
-                      .presentation
-                  }
-                </p>
-              </div>
-
               <div className="project-stack">
                 {projects[1].stack.map(
                   (tech) => (
@@ -1651,20 +2121,122 @@ function App() {
                   )
                 )}
               </div>
+
+              <div className="project-actions">
+                <a
+                  href={tigerRepo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="project-link primary-project-link"
+                >
+                  View Repository →
+                </a>
+
+                <a
+                  href={tigerRepo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="project-link"
+                >
+                  GitHub ↗
+                </a>
+              </div>
             </div>
           </div>
 
-          <div className="project-grid single-project-grid">
-            <article
-              className="project-card interactive-card reveal"
-              onMouseMove={
-                handleCardMove
-              }
-              onMouseLeave={
-                resetCard
-              }
-            >
-              <div className="project-card-top">
+          {/* LIGHT POLLUTION */}
+          <div
+            className="featured-project light-project interactive-card reveal"
+            onMouseMove={
+              handleCardMove
+            }
+            onMouseLeave={
+              resetCard
+            }
+          >
+            <div className="featured-project-media">
+              <div className="featured-image-wrapper light-image-wrapper">
+                <img
+                  key={
+                    selectedLightImage.id
+                  }
+                  src={
+                    selectedLightImage.image
+                  }
+                  alt={`Light Pollution Project ${selectedLightImage.label}`}
+                  className="featured-project-image light-project-image"
+                  onClick={() =>
+                    openGallery(
+                      lightGallery,
+                      activeLightImage,
+                      "Light Pollution"
+                    )
+                  }
+                  style={{
+                    cursor:
+                      "zoom-in",
+                  }}
+                />
+
+                <div className="image-status">
+                  <span></span>
+
+                  {
+                    selectedLightImage.label
+                  }
+                </div>
+              </div>
+
+              <div className="project-gallery light-gallery">
+                {lightGallery.map(
+                  (item, index) => (
+                    <button
+                      type="button"
+                      key={item.id}
+                      className={`gallery-thumbnail ${
+                        activeLightImage ===
+                        index
+                          ? "active"
+                          : ""
+                      }`}
+                      onClick={() => {
+                        setActiveLightImage(
+                          index
+                        );
+
+                        openGallery(
+                          lightGallery,
+                          index,
+                          "Light Pollution"
+                        );
+                      }}
+                    >
+                      <img
+                        src={
+                          item.image
+                        }
+                        alt={
+                          item.label
+                        }
+                        style={{
+                          cursor:
+                            "zoom-in",
+                        }}
+                      />
+
+                      <span>
+                        {
+                          item.label
+                        }
+                      </span>
+                    </button>
+                  )
+                )}
+              </div>
+            </div>
+
+            <div className="featured-info">
+              <div className="project-topline">
                 <span className="project-number">
                   {
                     projects[2].id
@@ -1677,22 +2249,6 @@ function App() {
                       .category
                   }
                 </span>
-              </div>
-
-              <div className="project-card-visual real-project-visual">
-                <img
-                  src={
-                    projects[2].image
-                  }
-                  alt="Engineering 1050 Ventilation Fan CAD model"
-                  className="project-real-image"
-                />
-
-                <div className="project-image-overlay">
-                  <span>
-                    CAD MODEL
-                  </span>
-                </div>
               </div>
 
               <h3>
@@ -1715,8 +2271,123 @@ function App() {
                 }
               </p>
 
+              <div className="project-contribution">
+                <span>
+                  MY CONTRIBUTION //
+                </span>
+
+                <p>
+                  {
+                    projects[2]
+                      .contribution
+                  }
+                </p>
+              </div>
+
+              <div className="client-presentation-box">
+                <div className="client-presentation-top">
+                  <span className="client-dot"></span>
+
+                  CLIENT PRESENTATION
+                </div>
+
+                <p>
+                  {
+                    projects[2]
+                      .presentation
+                  }
+                </p>
+              </div>
+
               <div className="project-stack">
                 {projects[2].stack.map(
+                  (tech) => (
+                    <span
+                      key={tech}
+                    >
+                      {tech}
+                    </span>
+                  )
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* CAD FAN */}
+          <div className="project-grid single-project-grid">
+            <article
+              className="project-card interactive-card reveal"
+              onMouseMove={
+                handleCardMove
+              }
+              onMouseLeave={
+                resetCard
+              }
+            >
+              <div className="project-card-top">
+                <span className="project-number">
+                  {
+                    projects[3].id
+                  }
+                </span>
+
+                <span className="project-category">
+                  {
+                    projects[3]
+                      .category
+                  }
+                </span>
+              </div>
+
+              <div className="project-card-visual real-project-visual">
+                <img
+                  src={
+                    projects[3].image
+                  }
+                  alt="Engineering 1050 Ventilation Fan CAD model"
+                  className="project-real-image"
+                  onClick={() =>
+                    openGallery(
+                      fanGallery,
+                      0,
+                      "Engineering 1050 Ventilation Fan"
+                    )
+                  }
+                  style={{
+                    cursor:
+                      "zoom-in",
+                  }}
+                />
+
+                <div className="project-image-overlay">
+                  <span>
+                    CAD MODEL
+                  </span>
+                </div>
+              </div>
+
+              <h3>
+                {
+                  projects[3].title
+                }
+              </h3>
+
+              <p className="project-description">
+                {
+                  projects[3]
+                    .description
+                }
+              </p>
+
+              <p className="project-secondary">
+                {
+                  projects[3]
+                    .secondary
+                }
+              </p>
+
+              <div className="project-stack">
+                {projects[3].stack.map(
                   (tech) => (
                     <span
                       key={tech}
