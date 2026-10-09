@@ -1040,7 +1040,7 @@ function App() {
 
             <div className="stats-grid">
               {[
-                ["01", "4+", "Projects Built"],
+                ["01", "3+", "Projects Built"],
                 ["02", "Full-Stack", "+ Engineering"],
                 ["03", "Hands-On", "Builder"],
                 ["04", "Always", "Learning"],
